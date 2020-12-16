@@ -48,5 +48,6 @@ func main() {
 	} else {
 		fmt.Println("没有重复元素")
 	}
-	fmt.Println()
+	fmt.Printf("%p\n", &struct{}{}) // 所有struct{}{}地址相同
+	fmt.Printf("%p\n", &struct{}{})
 }
