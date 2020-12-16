@@ -37,4 +37,10 @@ func main() {
 	fmt.Println("s3=", s3)
 	fmt.Println("s2=", s2)
 	fmt.Println(s2 == s3) //false
+
+	s4 := person{}
+	s4.id = 1
+	s4.human.sex = true
+	s4.human.weight = 80.2
+	fmt.Println(s2 == s4) //true
 }
