@@ -1,7 +1,9 @@
 package main
 
-import "fmt"
-
+import (
+	"fmt"
+	"strings"
+)
 // bubble sort
 func bubbleSort(arr *[5]int) {
 	for i := 0; i < len(*arr)-1; i++ {
@@ -18,5 +20,11 @@ func main() {
 	fmt.Printf("排序前：%v\n", arr)
 	bubbleSort(&arr)
 	fmt.Printf("排序后: %v\n", arr)
+
+	var str = make([]string, 2)
+	str = append(str, "aaa")
+	str = append(str, "bbb")
+	str2 := strings.Join(str,"")
+	fmt.Println(str2)
 
 }
