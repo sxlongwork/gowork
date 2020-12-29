@@ -5,6 +5,7 @@ type student struct {
 	age  byte
 }
 
+// GetDistance  *student
 func GetDistance(n string, a byte) *student {
 	return &student{
 		name: n,
