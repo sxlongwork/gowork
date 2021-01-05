@@ -23,8 +23,12 @@ type FamilyAccount struct{
 	pwd string
 }
 
-func (account *FamilyAccount) setPwd(pwd string){
+func (account *FamilyAccount) SetPwd(pwd string){
 	account.pwd = pwd
+}
+
+func (account *FamilyAccount) GetPwd() string{
+	 return account.pwd
 }
 
 func GetFamilyAccount() *FamilyAccount{
@@ -36,10 +40,12 @@ func GetFamilyAccount() *FamilyAccount{
 		note: "",
 		details: "收支\t余额\t金额\t说明",
 		record: false,
+		pwd: "",
 	}
 }
 
 func (account *FamilyAccount) detail(){
+	account.flag = false
 	if account.record{
 		fmt.Println(account.details)
 	} else {
@@ -49,6 +55,7 @@ func (account *FamilyAccount) detail(){
 }
 
 func (account *FamilyAccount) comeIn(){
+	account.flag = false
 	fmt.Printf("本次收入金额:")
 	fmt.Scanln(&account.money)
 	fmt.Printf("本次收入说明:")
@@ -60,6 +67,7 @@ func (account *FamilyAccount) comeIn(){
 }
 
 func (account *FamilyAccount) pay(){
+	account.flag = false
 	fmt.Printf("本次支出金额:")
 	fmt.Scanln(&account.money)
 	if account.money > account.bal {
