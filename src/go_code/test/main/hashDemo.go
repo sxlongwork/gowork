@@ -6,6 +6,7 @@ import (
 	// "log"
 	"fmt"
 	"strconv"
+	"github.com/gin-gonic/gin"
 )
 
 
@@ -22,4 +23,10 @@ func main() {
 	//测试一下其他东西
 	fmt.Println(strconv.Itoa(2))
 
+	r := gin.Default()
+	r.GET("/", func(c *gin.Context) {
+		c.String(200, "Hello, Geektutu")
+	})
+	r.Run() // listen and serve on 0.0.0.0:8080
+	
 }
