@@ -12,6 +12,7 @@ func main(){
 	file, err := os.OpenFile(filePath, os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil{
 		fmt.Println("open file error, err =", err)
+		return
 	}
 	//关闭文件
 	defer file.Close()
