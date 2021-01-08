@@ -8,7 +8,7 @@ import (
 var (
 	// 定义全局map变量，用于存储数据
 	m map[int]int = make(map[int]int, 10)
-	// 定义锁变量
+	// 定义锁变量,Mutex是互斥的意思，lock即全局的互斥锁
 	lock sync.Mutex
 )
 func test(n int){
