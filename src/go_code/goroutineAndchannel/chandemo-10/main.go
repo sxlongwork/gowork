@@ -30,6 +30,7 @@ func main(){
 	// 	}
 	// 	fmt.Printf("读取 %v\n", v)
 	// }
+	// 不建议使用label，可以考虑使用return等
 	label:
 	for{
 		time.Sleep(time.Second)
