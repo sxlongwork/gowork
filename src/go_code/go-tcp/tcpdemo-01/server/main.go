@@ -16,8 +16,6 @@ func HandleRequest(conn net.Conn){
 		}
 		fmt.Print(string(b[:n])+"\n")
 	}
-	
-	
 }
 
 func main(){
@@ -36,9 +34,6 @@ func main(){
 			// 如果出错，继续等待下一个链接请求，不能break
 			continue
 		}
-		
 		go HandleRequest(conn)
-
-
 	}
 }
