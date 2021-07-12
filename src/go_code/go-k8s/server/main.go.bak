@@ -1,0 +1,86 @@
+package main
+
+import (
+	"k8s.io/client-go/tools/clientcmd"
+	"k8s.io/client-go/kubernetes"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"flag"
+	"fmt"
+)
+func main(){
+	// 集群外访问集群需要kubeconfig配置文件
+	kubeconfig := flag.String("kubeconfig", "/root/.kube/config", "absolute path to the kubeconfig file")
+	flag.Parse()
+
+	config, err := clientcmd.BuildConfigFromFlags("", *kubeconfig)
+	if err != nil{
+		panic(err.Error())
+	}
+	// 创建clientset
+	clientset, err := kubernetes.NewForConfig(config)
+	if err != nil{
+		panic(err.Error())
+	}
+
+	// 获取所有pods列表，包括所有命名空间的
+	pods, err := clientset.CoreV1().Pods("").List(metav1.ListOptions{})
+	if err != nil{
+		panic(err.Error())
+	}
+	fmt.Printf("there are %d pods in k8s cluster.\n", len(pods.Items))
+
+	// 获取指定命名空间的所有pod
+	ns := "redis-ui"
+	podsInNs, err := clientset.CoreV1().Pods(ns).List(metav1.ListOptions{})
+	if err != nil{
+		panic(err.Error())
+	}
+	fmt.Println("-----------------pods--------------------------")
+	for _, pod := range podsInNs.Items{
+		fmt.Printf("%s\t%s\t%d\t%s\t%s\t%s\n", pod.ObjectMeta.Name, pod.Status.Phase, pod.Status.ContainerStatuses[0].RestartCount,
+		 pod.Status.PodIP, pod.Spec.NodeName, pod.ObjectMeta.CreationTimestamp)
+	}
+	// 获取指定名称的POD
+	podName := podsInNs.Items[0].ObjectMeta.Name
+	pod, err := clientset.CoreV1().Pods(ns).Get(podName, metav1.GetOptions{})
+	fmt.Printf("%s\t%s\t%s\t%s\t%s\n", pod.ObjectMeta.Name, pod.Status.Phase, pod.Status.PodIP, pod.Spec.NodeName, pod.ObjectMeta.CreationTimestamp)
+
+	// 获取所有的namespace
+	namespaces, err := clientset.CoreV1().Namespaces().List(metav1.ListOptions{})
+	if err != nil{
+		panic(err.Error())
+	}
+	fmt.Println("-----------------namespaces--------------------------")
+	for _, ns := range namespaces.Items{
+		fmt.Printf("%s\t%s\t%s\n", ns.ObjectMeta.Name, ns.Status.Phase, ns.ObjectMeta.CreationTimestamp)
+	}
+	// 获取指定namespace的service
+	svcs, err := clientset.CoreV1().Services(ns).List(metav1.ListOptions{})
+	if err != nil{
+		panic(err.Error())
+	}
+	fmt.Println("-----------------services--------------------------")
+	for _, svc := range svcs.Items{
+		fmt.Printf("%s\t%s\t%s\t%s\n",svc.ObjectMeta.Name, svc.Spec.Type, svc.Spec.ClusterIP, svc.ObjectMeta.CreationTimestamp)
+	}
+	// 获取指定namespace的所有deployment
+	deploys, err := clientset.AppsV1().Deployments(ns).List(metav1.ListOptions{})
+	if err != nil{
+		panic(err.Error())
+	}
+	fmt.Println("-----------------deployments--------------------------")
+	for _, deploy := range deploys.Items{
+		fmt.Printf("%s\t%d/%d\t%d\t%s\n", deploy.ObjectMeta.Name, deploy.Status.ReadyReplicas, 
+		*deploy.Spec.Replicas, deploy.Status.AvailableReplicas, deploy.ObjectMeta.CreationTimestamp)
+	}
+	// 获取指定namespace的所有statefulset
+	statelfulsets, err := clientset.AppsV1().StatefulSets("default").List(metav1.ListOptions{})
+	if err != nil{
+		panic(err.Error())
+	}
+	fmt.Println("-----------------statefulsets--------------------------")
+	for _, stateful := range statelfulsets.Items{
+		fmt.Printf("%s\t%d/%d\t%s\n", stateful.ObjectMeta.Name, stateful.Status.ReadyReplicas, *stateful.Spec.Replicas, stateful.ObjectMeta.CreationTimestamp)
+	}
+}
+
