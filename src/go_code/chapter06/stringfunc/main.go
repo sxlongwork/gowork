@@ -1,4 +1,5 @@
 package main
+
 import (
 	"fmt"
 	"strconv"
@@ -7,11 +8,11 @@ import (
 
 //常用的字符串系统函数
 
-func main(){
-	
+func main() {
+
 	//统计字符串的长度，按字节len(str)
-	str := "xianqian海"					//一个字母占一个字节，一个汉字占3个字节，所以共11个字节
-	fmt.Println("len(str)=", len(str))	// 11
+	str := "xianqian海"                 //一个字母占一个字节，一个汉字占3个字节，所以共11个字节
+	fmt.Println("len(str)=", len(str)) // 11
 
 	//字符串遍历，同时处理中文问题，r = []rune(str)
 	// r := []rune("xianqian么么哒")
@@ -100,16 +101,16 @@ func main(){
 	//将字符串左边指定的字符去掉，strings.TrimLeft("!hello!")
 	// str = strings.TrimLeft("!love!", "!")	//love!
 	// fmt.Println(str)
-	
+
 	//将字符串右边指定的字符去掉，strings.TrimRight("!hello!")
 	// str = strings.TrimRight("!love!", "!")		//!love
 	// fmt.Println(str)
 
 	//20、判断字符串是否以指定的字符串开头，strings.HasPrefix("lovexianqian", "love")
-	f := strings.HasPrefix("lovexianqian", "love")	//true
-	fmt.Println(f)
+	// f := strings.HasPrefix("lovexianqian", "love")	//true
+	// fmt.Println(f)
 
 	//21、判断字符串是否以指定的字符串结束，strings.HasSuffix("xianqianlove", "love")
-	f := strings.HasSuffix("xianqianlove", "love")		//true
+	f := strings.HasSuffix("xianqianlove", "love") //true
 	fmt.Println(f)
 }
