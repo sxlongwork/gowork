@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"strconv"
 )
 
 func main1(){
@@ -20,14 +21,7 @@ func main1(){
 
 }
 
-func main(){
-
-	// reader := bufio.NewReader(os.Stdin)
-	// str, _ := reader.ReadString('\n')
-	// ch, _ := reader.ReadByte()
-	// num := strings.Count(strings.ToLower(str), strings.ToLower(string(ch)))
-	// fmt.Println(num)
-
+func stringsTest1(){
 	str1 := "a Ba号2"
 	str2 := "A ba号2"
 	fmt.Println(strings.EqualFold(str1, str2))	// 忽略大小写
@@ -58,5 +52,21 @@ func main(){
 	str = append(str, "aa")
 	str = append(str, "bb")
 	fmt.Println(strings.Join(str, "#"))	// aa#bb
+}
+
+func strconvTest(){
+	fmt.Println(strconv.ParseBool("true"))
+	fmt.Println(strconv.FormatBool(true))
+	fmt.Println(strconv.FormatInt(10,2))
+}
+func main(){
+
+	// reader := bufio.NewReader(os.Stdin)
+	// str, _ := reader.ReadString('\n')
+	// ch, _ := reader.ReadByte()
+	// num := strings.Count(strings.ToLower(str), strings.ToLower(string(ch)))
+	// fmt.Println(num)
+
+	strconvTest()
 
 }

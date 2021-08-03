@@ -4,9 +4,47 @@ import (
 	"fmt"
 	"go_code/chapter06/stringdemo/arraylist"
 	"go_code/chapter06/stringdemo/stack"
+	"go_code/chapter06/stringdemo/btree"
+	"bufio"
+	"os"
+	"strings"
+	"strconv"
+	"sort"
 )
 
-func main() {
+
+type A struct{
+	name string
+}
+/*
+去除数组重复元素
+输入：1 1 1 1 3 4 5 3
+输出：1 3 4 5 
+*/
+func test() {
+	reader := bufio.NewReader(os.Stdin)
+	data, _, _ := reader.ReadLine()
+	datalist := strings.Fields(string(data))
+
+	var numlist []int = make([]int, 0,10)
+	for _, v := range datalist {
+		num, _ := strconv.Atoi(v)
+		numlist = append(numlist, num)
+	}
+	sort.Sort(sort.IntSlice(numlist))
+
+	for i := 0; i< len(numlist)-1; i++ {
+		if numlist[i] ^ numlist[i+1] == 0 {
+			numlist = append(numlist[:i], numlist[i+1:]...)
+			i--
+		}
+	}
+	for _, v := range numlist{
+		fmt.Print(v, " ")
+	}
+}
+
+func main1() {
 
 	var list arraylist.List = new(arraylist.ArrayList)
 	list.Append("aa")
@@ -39,4 +77,33 @@ func main() {
 	fmt.Println(mystack.Pop())
 	fmt.Println(mystack)
 	fmt.Println(mystack.Size())
+	fmt.Println("--------------------------------------------")
+
+	var m map[string]string = make(map[string]string, 1)
+	m["aa"] = "aa"
+	fmt.Printf("%p\n",m)
+	var a A = A{name:"oh"}
+	fmt.Printf("%v",a)
+	fmt.Println("--------------------------------------------")
+}
+
+func main(){
+
+	var root  = btree.CreateBtree(5)
+	root.Lchild = btree.CreateBtree(4)
+	root.Rchild = btree.CreateBtree(6)
+	root.Lchild.Lchild = btree.CreateBtree(3)
+	root.Lchild.Rchild = btree.CreateBtree(4)
+
+	node := root.FindNode(root, 4)
+	if node != nil {
+		fmt.Println(node.Data)
+	}
+	fmt.Println(root.GetHeight(root))
+
+	reader := bufio.NewReader(os.Stdin)
+
+	data,_,_ := reader.ReadLine()
+	fmt.Printf("%T\n",data)
+	fmt.Println(len(data))
 }
